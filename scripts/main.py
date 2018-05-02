@@ -3,12 +3,13 @@ from pyspark.sql.types import *
 from pyspark.sql import SQLContext
 import pyspark as ps
 import numpy as np
+import pipeline as p
 
 if __name__ == '__main__':
 
     spark = (
             ps.sql.SparkSession.builder
-            .master("local[-1]")
+            .master("local[4]")
             .appName("jampoq")
             .getOrCreate()
             )
@@ -21,4 +22,8 @@ if __name__ == '__main__':
 
     df = spark.read.json(toys_games)
 
-    print(df.show(5))
+    pipeline = p.Pipeline(df,spark)
+
+    pipeline.get_data(10,'.85')
+
+    pipeline.df.show(5)
