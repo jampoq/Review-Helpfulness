@@ -22,8 +22,14 @@ if __name__ == '__main__':
 
     df = spark.read.json(toys_games)
 
+    # Instantiate pipeline
     pipeline = p.Pipeline(df,spark)
 
+    # Get filtered data with helpful label at threshold.
     pipeline.get_data(10,'.85')
+
+    # Add first and second layer features.
+    pipeline.add_first_layer_features()
+    pipeline.add_sec_layer_features()
 
     pipeline.df.show(5)
