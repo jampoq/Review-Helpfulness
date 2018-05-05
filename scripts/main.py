@@ -4,6 +4,7 @@ from pyspark.sql import SQLContext
 import pyspark as ps
 import numpy as np
 import pipeline as p
+import model as m
 
 if __name__ == '__main__':
 
@@ -23,13 +24,18 @@ if __name__ == '__main__':
     df = spark.read.json(toys_games)
 
     # Instantiate pipeline
-    pipeline = p.Pipeline(df,spark)
+    pipeline = p.DataPipeline(df,spark,sc)
 
     # Get filtered data with helpful label at threshold.
     pipeline.get_data(10,'.85')
 
-    # Add first and second layer features.
+    # Add features.
     pipeline.add_first_layer_features()
     pipeline.add_sec_layer_features()
+    pipeline.add_sentiment()
+    pipeline.add_pyspark_features()
 
-    pipeline.df.show(5)
+    # Time to plug transformed data into some models!!!
+    model = m.Model(pipeline.df,.7)
+
+    logistic_sv = m.run_logistic_cv()

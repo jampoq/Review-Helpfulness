@@ -9,10 +9,11 @@ export PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser --NotebookApp.ip='0.0.0
 ${SPARK_HOME}/bin/pyspark \
 	--master yarn \
         --deploy-mode client \
-	--executor-memory 10G \
-        --executor-cores 4 \
-	--driver-memory 10G \
-        --driver-cores 4 \
+	--executor-memory 15G \
+        --executor-cores 8 \
+	--driver-memory 15G \
+        --driver-cores 8 \
 	--packages com.databricks:spark-csv_2.11:1.5.0 \
 	--packages com.amazonaws:aws-java-sdk-pom:1.10.34 \
-	--packages org.apache.hadoop:hadoop-aws:2.7.3
+	--packages org.apache.hadoop:hadoop-aws:2.7.3 \
+	--conf spark.driver.maxResultSize=3g
