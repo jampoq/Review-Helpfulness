@@ -13,7 +13,8 @@ from pyspark.ml.feature import (RegexTokenizer,
                                 StandardScaler,
                                 HashingTF,
                                 IDF,
-                                PCA)
+                                PCA,
+                                ChiSqSelector)
 
 import pandas as pd
 import numpy as np
@@ -178,9 +179,11 @@ class DataPipeline():
         self.df = sqlCtx.createDataFrame(data=df_final)
 
     def add_pyspark_features(self,
-                             transform_type='countvectorizer',
-                             pca=False,
-                             pca_k = 3000):
+                             transform_type = 'countvectorizer',
+                             pca = False,
+                             pca_k = 500,
+                             chi_sqr = False,
+                             chi_feature_num = 500):
         '''
         Add built in pyspark feature transformations using pyspark's
         Pipeline.
@@ -277,7 +280,9 @@ class DataPipeline():
 
         # Use PCA if user wants to use it.
         if pca:
-            pca = PCA(k=pca_k, inputCol="review_vector", outputCol="pcaFeatures")
+            pca = PCA(k=pca_k,
+                      inputCol="review_vector",
+                      outputCol="pcaFeatures")
             stages += [pca]
 
         # Perform one hot encoding on all categorical variables.
@@ -320,13 +325,29 @@ class DataPipeline():
             assemblerInputs += ['pcaFeatures']
             assemblerInputs.remove('review_vector')
 
-        assembler = VectorAssembler(inputCols=assemblerInputs, outputCol="unstandard_features")
+        assembler = VectorAssembler(inputCols=assemblerInputs,
+                                    outputCol="unstandard_features")
         stages += [assembler]
 
-        # Standardize features.
-        scaler = StandardScaler(inputCol="unstandard_features", outputCol="features",
-                                withStd=True, withMean=False)
-        stages += [scaler]
+        # Do Chi-Squared Feature Reduction if wanted.
+        if chi_sqr:
+            chi_selector = ChiSqSelector(numTopFeatures=chi_feature_num,
+                                         featuresCol="unstandard_features",
+                                         outputCol="chi_features",
+                                         labelCol="label")
+            stages += [chi_selector]
+
+            scaler = StandardScaler(inputCol="chi_features",
+                                    outputCol="features",
+                                    withStd=True,
+                                    withMean=False)
+            stages += [scaler]
+        else:
+            scaler = StandardScaler(inputCol="unstandard_features",
+                                    outputCol="features",
+                                    withStd=True,
+                                    withMean=False)
+            stages += [scaler]
 
         # Initialize the pipeline with the stages that were set.
         pipeline = Pipeline(stages=stages)

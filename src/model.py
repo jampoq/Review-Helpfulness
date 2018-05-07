@@ -2,6 +2,7 @@ from pyspark.ml.classification import LogisticRegression
 from pyspark.ml.classification import RandomForestClassifier
 from pyspark.ml.classification import GBTClassifier
 from pyspark.ml.classification import NaiveBayes
+from pyspark.ml.classification import LinearSVC
 from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
 from pyspark.mllib.evaluation import BinaryClassificationMetrics
 
@@ -25,8 +26,8 @@ class Model():
         self.test_count = self.testData.count()
 
         # Get class balance:
-        self.positives = self.trainingData.filter(self.trainingData.label == 1).count()
-        self.class_balance = self.positives/self.train_count
+        self.positives = self.testData.filter(self.testData.label == 1).count()
+        self.class_balance = self.positives/self.test_count
 
         self.filename = file_name
 
@@ -346,6 +347,48 @@ class Model():
         # Write type of model to filename.
         with open(self.filename,'a') as f:
             f.write("\n\nGradient Boost:")
+
+        # Create confusion matrix to see how well the model performed
+        confusion_matrix = self.create_confusion_matrix(predictions)
+
+        # Evaluate model's AUC.
+        auc = self.evaluator.evaluate(predictions)
+        print("AUC Score: ",str(auc))
+
+        # Write result of model to filename.
+        with open(self.filename,'a') as f:
+            f.write("\nAUC Score: " + str(auc))
+
+        return confusion_matrix
+
+    def run_linear_svc(self):
+        '''
+        Method to run linear_svc on our transformed data.
+
+        Input:
+        -------
+        None
+
+        Output:
+        -------
+        Dictionary of confusion matrix scores for this particular model.
+        '''
+
+        # Instantiate model
+        svc = LinearSVC(labelCol="label",
+                        featuresCol="features",
+                        maxIter=40
+                        )
+
+        # Train model.  This also runs the indexers.
+        model = svc.fit(self.trainingData)
+
+        # Make predictions.
+        predictions = model.transform(self.testData)
+
+        # Write type of model to filename.
+        with open(self.filename,'a') as f:
+            f.write("\n\nLinear SVC:")
 
         # Create confusion matrix to see how well the model performed
         confusion_matrix = self.create_confusion_matrix(predictions)
