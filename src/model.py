@@ -21,7 +21,7 @@ class Model():
                                                        metricName='areaUnderROC')
 
         # Split data into train and test sets:
-        self.trainingData, self.testData = data.randomSplit([split, 1-split])
+        self.trainingData, self.testData = data.randomSplit([split, 1-split],seed=123456)
         self.train_count = self.trainingData.count()
         self.test_count = self.testData.count()
 
