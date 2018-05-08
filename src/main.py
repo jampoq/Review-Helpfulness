@@ -27,6 +27,8 @@ if __name__ == '__main__':
     cds_vinyl = 's3a://capstone-g65ds/data/reviews_CDs_and_Vinyl_5.json'
     books = 's3a://capstone-g65ds/data/reviews_Books_5.json'
 
+    kindle_local = """file:///home/hadoop/reviews_Kindle_Store_5.json"""
+
     df = spark.read.json(cds_vinyl)
 
     ###############################
@@ -66,7 +68,7 @@ if __name__ == '__main__':
 
     m2 = model.Model(p2.df,.7,'results_tfidf_pca.txt')
     m2.run_logistic_cv()
-    m2.run_linear_svc()
+    #m2.run_linear_svc()
     m2.run_gradient_boost()
 
     ###############################
@@ -86,7 +88,7 @@ if __name__ == '__main__':
 
     m3 = model.Model(p3.df,.7,'results_tfidf_chi.txt')
     m3.run_logistic_cv()
-    m3.run_linear_svc()
+    #m3.run_linear_svc()
     m3.run_gradient_boost()
 
     ###################################
@@ -106,7 +108,7 @@ if __name__ == '__main__':
 
     m4 = model.Model(p4.df,.7,'results_countvect_only.txt')
     m4.run_logistic_cv()
-    m4.run_linear_svc()
+    #m4.run_linear_svc()
     m4.run_gradient_boost()
 
     ###################################
@@ -126,7 +128,7 @@ if __name__ == '__main__':
 
     m5 = model.Model(p5.df,.7,'results_countvect_pca.txt')
     m5.run_logistic_cv()
-    m5.run_linear_svc()
+    #m5.run_linear_svc()
     m5.run_gradient_boost()
 
     ###################################
@@ -146,7 +148,7 @@ if __name__ == '__main__':
 
     m6 = model.Model(p6.df,.7,'results_countvect_chi.txt')
     m6.run_logistic_cv()
-    m6.run_linear_svc()
+    #m6.run_linear_svc()
     m6.run_gradient_boost()
 
     ################################
@@ -166,7 +168,7 @@ if __name__ == '__main__':
 
     m7 = model.Model(p7.df,.7,'results_ngrams_only.txt')
     m7.run_logistic_cv()
-    m7.run_linear_svc()
+    #m7.run_linear_svc()
     m7.run_gradient_boost()
 
     ################################
@@ -186,7 +188,7 @@ if __name__ == '__main__':
 
     m8 = model.Model(p8.df,.7,'results_ngrams_pca.txt')
     m8.run_logistic_cv()
-    m8.run_linear_svc()
+    #m8.run_linear_svc()
     m8.run_gradient_boost()
 
     ################################
@@ -206,7 +208,7 @@ if __name__ == '__main__':
 
     m9 = model.Model(p9.df,.7,'results_ngrams_chi.txt')
     m9.run_logistic_cv()
-    m9.run_linear_svc()
+    #m9.run_linear_svc()
     m9.run_gradient_boost()
 
     ##################################
@@ -226,7 +228,7 @@ if __name__ == '__main__':
 
     m10 = model.Model(p10.df,.7,'results_word2vec_only.txt')
     m10.run_logistic_cv()
-    m10.run_linear_svc()
+    #m10.run_linear_svc()
     m10.run_gradient_boost()
 
     ##################################
@@ -246,7 +248,7 @@ if __name__ == '__main__':
 
     m11 = model.Model(p11.df,.7,'results_word2vec_pca.txt')
     m11.run_logistic_cv()
-    m11.run_linear_svc()
+    #m11.run_linear_svc()
     m11.run_gradient_boost()
 
     ##################################
@@ -266,5 +268,5 @@ if __name__ == '__main__':
 
     m12 = model.Model(p12.df,.7,'results_word2vec_chi.txt')
     m12.run_logistic_cv()
-    m12.run_linear_svc()
+    #m12.run_linear_svc()
     m12.run_gradient_boost()

@@ -154,8 +154,8 @@ class Model():
 
         # Create ParamGrid for Cross Validation
         paramGrid = (ParamGridBuilder()
-                    .addGrid(lr.regParam, [0.1, 0.3, 0.5]) # regularization parameter
-                    .addGrid(lr.elasticNetParam, [0.0, 0.1, 0.2]) # Elastic Net Parameter (Ridge = 0)
+                    .addGrid(lr.regParam, [0.1, 0.3]) # regularization parameter
+                    .addGrid(lr.elasticNetParam, [0.0, 0.1]) # Elastic Net Parameter (Ridge = 0)
                     #.addGrid(lr.maxIter, [10, 20, 30]) #Number of iterations
                     #.addGrid(idf.numFeatures, [10, 100, 1000]) # Number of features
                     .build())
@@ -204,7 +204,7 @@ class Model():
                         labelCol='label',
                         smoothing=1)
         model = nb.fit(self.trainingData)
-        print("GOT HERE!!!")
+
         predictions = model.transform(self.testData)
 
         # Write type of model to filename.
@@ -335,7 +335,7 @@ class Model():
         # Instantiate model
         gbt = GBTClassifier(labelCol="label",
                             featuresCol="features",
-                            maxIter=50
+                            maxIter=30
                             )
 
         # Train model.  This also runs the indexers.
@@ -377,7 +377,7 @@ class Model():
         # Instantiate model
         svc = LinearSVC(labelCol="label",
                         featuresCol="features",
-                        maxIter=40
+                        maxIter=30
                         )
 
         # Train model.  This also runs the indexers.
