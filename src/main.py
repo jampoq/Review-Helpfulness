@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     kindle_local = """file:///home/hadoop/reviews_Kindle_Store_5.json"""
 
-    df = spark.read.json(cds_vinyl)
+    df = spark.read.json(kindle_local)
 
     ###############################
     # Model scores for TFIDF only.
