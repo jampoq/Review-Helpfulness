@@ -4,7 +4,6 @@
 
 Have you ever been looking for an item on Amazon that wasn’t particular popular and noticed that none of the reviews are tagged helpful? This project builds a model to classify whether a review is “helpful” in order to prioritize “helpful” untagged reviews.
 
-<<<<<<< HEAD
 ## Data
 
 I used [UCSD's Julian Mcauley's Amazon Review dataset](http://jmcauley.ucsd.edu/data/amazon/links.html) which is split up into subcategories of reviews and is a total of about 35G of data.
@@ -70,19 +69,8 @@ I used AWS EMR with Apache Spark to create combinations of feature pipelines tha
 
 ### Top Pipeline + Model: TFIDF -> Ridge -> Logistic w/CV
 - Class Balance: .535
->>>>>>> 897f46a5e3df308d87bba8d66e5a3204b4b0623e
 - Accuracy: .797
 - Precision: .767
 - Recall: .811
 - F1 Score: .78
-
-<<<<<<< HEAD
-
-=======
-## Technology
-
-To be able to run all these different feature pipeline and model combinations on such a large dataset of reviews, I had to make use of Apache Spark and Amazon’s EMR Cluster. I stored all my data into an AWS S3 bucket and connected it to my AWS EMR cluster with the configuration shown below.
-- Master Node - 8 Cores 15G Mem
-- 14 Core Nodes - 8 Cores 15G Mem
->>>>>>> 897f46a5e3df308d87bba8d66e5a3204b4b0623e
 
