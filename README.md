@@ -56,21 +56,7 @@ I trained each feature pipeline combination on each of the following models.
 
 ### Top Pipeline + Model: TFIDF -> Chi Squared Reduction -> Gradient Boost
 - Class Balance: 47 | 53
-=======
-## Model
-
-I used AWS EMR with Apache Spark to create combinations of feature pipelines that feed into various models to end up with a large number of models to pick the best from.
-
-### Feature Pipeline:
-- Featurize review text
-- Choose reduction method
-- Engineer new features
-- Train models
-
-### Top Pipeline + Model: TFIDF -> Ridge -> Logistic w/CV
-- Class Balance: .535
 - Accuracy: .797
 - Precision: .767
 - Recall: .811
 - F1 Score: .78
-
