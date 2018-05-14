@@ -37,12 +37,19 @@ In my feature pipeline, I included the option to reduce the corpus by one of the
 - **Chi-Squared Test -** PySpark's Chi-Squared module conducts a goodness of fit test between each feature to the helfulness label and keeps the features with the most significant p-values to the label.
 
 ##### Step 3. Feature Engineering (Squeeze out signal)
+The last step is trying to squeeze out as much signal as you can from the characteristics of the text.
 
-### Feature Pipeline:
-- Featurize review text
-- Choose reduction method
-- Engineer new features
-- Train models
+- **Adding Sentiment -** I used the [VADER](https://github.com/cjhutto/vaderSentiment) package to try to extract sentiment scores of each review into 4 categories: positivity, negativity, neutrality, and a compound score which is an aggregate measure of the previous 3 catogeries.
+- **Style -** I added features based on sentence style of each review such as puncuation types/counts, sentence/word lengths, full capital letter counts and more.
+
+##### Step 4: Putting transformed feature space into models
+I trained each feature pipeline combination on each of the following models.
+- Logistic Regression using Ridge
+- LinearSVC
+- Random Forest
+- Gradient Boost
+
+![images/pyspark_feature_pipeline.png](images/pyspark_feature_pipeline.png)
 
 ### Top Pipeline + Model: TFIDF -> Ridge -> Logistic w/CV
 - Class Balance: .535
@@ -50,10 +57,4 @@ In my feature pipeline, I included the option to reduce the corpus by one of the
 - Precision: .767
 - Recall: .811
 - F1 Score: .78
-
-## Technology
-
-To be able to run all these different feature pipeline and model combinations on such a large dataset of reviews, I had to make use of Apache Spark and Amazon’s EMR Cluster. I stored all my data into an AWS S3 bucket and connected it to my AWS EMR cluster with the configuration shown below.
-- Master Node - 8 Cores 15G Mem
-- 14 Core Nodes - 8 Cores 15G Mem
 
