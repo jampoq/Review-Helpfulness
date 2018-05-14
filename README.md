@@ -18,7 +18,7 @@ I stored all my data on an AWS S3 storage bucket, connected it to a master AWS E
 
 ## Model
 
-Since I was using Apache Spark to run everything on an EMR instance, I decided to max out on the number of feature pipeline and model combinations I could to pick the best model to classify helpful Amazon reviews.
+Since I was using Apache Spark to run everything on an EMR instance, I decided to max out on the number of feature pipeline and model combinations I could think of that made sense to find the most effective model to classify helpful Amazon reviews. The following is the feature pipeline combined with the models I trained on that resulted in a total of 48 models.
 
 ### Feature Pipeline
 
@@ -52,10 +52,14 @@ I trained each feature pipeline combination on each of the following models.
 
 ![images/pyspark_feature_pipeline.png](images/pyspark_feature_pipeline.png)
 
-### Top Pipeline + Model: TFIDF -> Ridge -> Logistic w/CV
-- Class Balance: .535
+## Results
+
+### Top Pipeline + Model: TFIDF -> Chi Squared Reduction -> Gradient Boost
+- Class Balance: 47 | 53
 - Accuracy: .797
 - Precision: .767
 - Recall: .811
 - F1 Score: .78
+
+
 
