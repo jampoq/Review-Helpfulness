@@ -25,25 +25,16 @@ Since I was using Apache Spark to run everything on an EMR instance, I decided t
 #### Step 1: Featurize Review Text
 The first step in doing anything NLP related is featurizing your text, or in other words, turning your text into numeric representations to run machine learning models on. I did this by choosing 4 different methods to featurize text.
 
-**Count Vectorizer:** Representation of text where you count word frequencies. It weighs words that appear more times in your entire corpus (bag of words) higher.
-
-##### TF-IDF (Term Frequency - Inverse Document Frequency)
-Similar to Count Vectorizer but instead of increasing the weight of term frequency in your entire corpus, it puts more importance on words that appear more per document.
-
-##### N-Grams (Only used Unigrams + Bigrams)
-This numeric representation puts more importance on single word and 2-word phrases that appear more frequently in the entire corpus.
-
-##### Word2Vec
-SparkML uses a pretrained mapping of words to numeric values based on [Google's trained word mapping](https://code.google.com/archive/p/word2vec/). This maps "similar" words, or synonyms to numbers that are closer together. It also takes into account skipgrams, which means it also maps words that are more probable to appear next to each other to closer numeric values.
+- **Count Vectorizer -** Representation of text where you count word frequencies. It weighs words that appear more times in your entire corpus (bag of words) higher.
+- **TF-IDF (Term Frequency - Inverse Document Frequency)-** Similar to Count Vectorizer but instead of increasing the weight of term frequency in your entire corpus, it puts more importance on words that appear more per document.
+- **N-Grams (Only used Unigrams + Bigrams) -** This numeric representation puts more importance on single word and 2-word phrases that appear more frequently in the entire corpus.
+- **Word2Vec -** SparkML uses a pretrained mapping of words to numeric values based on [Google's trained word mapping](https://code.google.com/archive/p/word2vec/). This maps "similar" words, or synonyms to numbers that are closer together. It also takes into account skipgrams, which means it also maps words that are more probable to appear next to each other to closer numeric values.
 
 #### Step 2: Feature Reduction
 In my feature pipeline, I included the option to reduce the corpus by one of the following two methods.
 
-##### PCA (Principal Component Analysis)
-Using PySpark's PCA module, this method attempts to reduce the feature space by trying to filter out features that might not really be contributing to predicting the helpfulness of Amazon reviews.
-
-##### Chi-Squared Test
-PySpark's Chi-Squared module conducts a goodness of fit test between each feature to the helfulness label and keeps the features with the most significant p-values to the label.
+- **PCA (Principal Component Analysis) -** Using PySpark's PCA module, this method attempts to reduce the feature space by trying to filter out features that might not really be contributing to predicting the helpfulness of Amazon reviews.
+- **Chi-Squared Test -** PySpark's Chi-Squared module conducts a goodness of fit test between each feature to the helfulness label and keeps the features with the most significant p-values to the label.
 
 ##### Step 3. Feature Engineering (Squeeze out signal)
 
