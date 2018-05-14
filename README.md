@@ -35,6 +35,7 @@ In my feature pipeline, I included the option to reduce the corpus by one of the
 
 - **PCA (Principal Component Analysis) -** Using PySpark's PCA module, this method attempts to reduce the feature space by trying to filter out features that might not really be contributing to predicting the helpfulness of Amazon reviews.
 - **Chi-Squared Test -** PySpark's Chi-Squared module conducts a goodness of fit test between each feature to the helfulness label and keeps the features with the most significant p-values to the label.
+- **No Reduction -** Also included a line in the pipeline where we don't reduce features.
 
 #### Step 3. Feature Engineering (Squeeze out signal)
 The last step is trying to squeeze out as much signal as you can from the characteristics of the text.
